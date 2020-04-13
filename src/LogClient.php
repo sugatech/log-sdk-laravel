@@ -50,10 +50,10 @@ class LogClient
     /**
      * @param string $type
      * @param string $version
-     * @param string $data
+     * @param string|null $data
      * @return bool
      */
-    public function createLog($type, $version, $data)
+    public function createLog($type, $version, $data = null)
     {
         return $this->request()
             ->asJson()
