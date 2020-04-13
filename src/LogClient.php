@@ -49,8 +49,8 @@ class LogClient
 
     /**
      * @param string $type
-     * @param int $version
-     * @param string|null $data
+     * @param string $version
+     * @param array|null $data
      * @return bool
      */
     public function log($type, $version, $data = null)
@@ -62,7 +62,7 @@ class LogClient
                 [
                     'type' => $type,
                     'version' => $version,
-                    'data' => $data,
+                    'data' => is_array($data) ? implode(config('log.delimiter'), $data) : null,
                 ]
             )
             ->isSuccess();
