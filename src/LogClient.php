@@ -51,7 +51,7 @@ class LogClient
      * @param string $type
      * @param string $version
      * @param string $data
-     * @return object
+     * @return bool
      */
     public function createLog($type, $version, $data)
     {
@@ -65,6 +65,6 @@ class LogClient
                     'data' => $data,
                 ]
             )
-            ->json();
+            ->isSuccess();
     }
 }
