@@ -2,6 +2,7 @@
 
 namespace Log\SDK;
 
+use Illuminate\Support\Arr;
 use Zttp\PendingZttpRequest;
 use Zttp\Zttp;
 
@@ -66,7 +67,7 @@ class LogClient
                 [
                     'type' => $type,
                     'version' => $version,
-                    'data' => is_array($data) ? implode(config('log.delimiter'), $data) : null,
+                    'data' => is_array($data) ? Arr::flatten($data) : null,
                 ]
             )
             ->isSuccess();
