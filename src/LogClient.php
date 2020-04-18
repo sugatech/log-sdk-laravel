@@ -63,7 +63,7 @@ class LogClient
                 [
                     'type' => $type,
                     'version' => $version,
-                    'data' => Arr::flatten($data),
+                    'data' => is_array($data) ? Arr::flatten($data) : null,
                 ]
             )
             ->isSuccess();
