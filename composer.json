@@ -1,6 +1,6 @@
 {
     "name": "sugatech/log-sdk-laravel",
-    "version": "20.0.0",
+    "version": "20.1.0",
     "type": "library",
     "description": "Log Service SDK for Laravel and Lumen",
     "license": "MIT",
