@@ -55,6 +55,10 @@ class LogClient
      */
     public function log($type, $version, $data = null)
     {
+        if (config('log.dry_run')) {
+            return true;
+        }
+
         return $this->request()
             ->asJson()
             ->post(
