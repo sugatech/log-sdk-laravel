@@ -50,15 +50,24 @@ class LogClient
 
     /**
      * @param string $type
-     * @param string $version
-     * @param array|null $data
+     * @param array $pairs
      * @return bool
      */
-    public function log($type, $version, $data = null)
+    public function log($type, $pairs)
     {
         if (config('log.dry_run')) {
             return true;
         }
+
+        $keys = null;
+        $data = [];
+
+        foreach ($pairs as $pair) {
+            $keys .= key($pair);
+            $data = array_merge($data, array_values($pair));
+        }
+
+        $version = md5($keys);
 
         return $this->request()
             ->asJson()
