@@ -62,7 +62,7 @@ class LogClient
         $keys = array_column($entries, 'key');
         $data = array_column($entries, 'value');
 
-        $version = md5(implode(',', $keys));
+        $version = sha1(implode(',', $keys));
 
         return $this->request()
             ->asJson()
