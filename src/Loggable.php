@@ -64,6 +64,11 @@ trait Loggable
             $relatedInstance = $relatedInstance->$segment()->getRelated();
         }
 
-        return array_fill(0, count($relatedInstance->loggable), null);
+        return array_map(function ($attribute) use ($relation) {
+            return [
+                'key' => $relation.':'.$attribute,
+                'value' => null,
+            ];
+        }, $relatedInstance->loggable);
     }
 }
