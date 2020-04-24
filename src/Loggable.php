@@ -15,25 +15,26 @@ trait Loggable
      * Get the loggable array for the model.
      *
      * @param string[]|null $relations
+     * @param string $keyPrefix
      * @return array
      */
-    public function toLoggableArray($relations = null)
+    public function toLoggableArray($relations = null, $keyPrefix = '')
     {
-        $pairs = [];
+        $entries = [];
 
         foreach($this->loggable as $attribute) {
-            $pairs[] = [$attribute => $this->getAttribute($attribute)];
+            $entries[] = ['key' => $keyPrefix.':'.$attribute, 'value' => $this->getAttribute($attribute)];
         }
 
         if(!empty($relations)) {
             $this->loadMissing($relations);
 
             foreach ($relations as $relation) {
-                $pairs = array_merge($pairs, $this->getRelatedLoggableArray($relation));
+                $entries = array_merge($entries, $this->getRelatedLoggableArray($relation));
             }
         }
 
-        return $pairs;
+        return $entries;
     }
 
     /**
@@ -44,7 +45,7 @@ trait Loggable
     {
         $relatedInstance = object_get($this, $relation);
         if($relatedInstance) {
-            return $relatedInstance->toLoggableArray();
+            return $relatedInstance->toLoggableArray(null, $relation);
         } else {
             return $this->makeDummyLoggableArray($relation);
         }
