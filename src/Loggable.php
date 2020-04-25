@@ -12,13 +12,13 @@ trait Loggable
     protected $loggable = [];
 
     /**
-     * Get the loggable array for the model.
+     * Get the log entries for the model.
      *
      * @param string[]|null $relations
      * @param string $keyPrefix
      * @return array
      */
-    public function toLoggableArray($relations = null, $keyPrefix = '')
+    public function toLogEntries($relations = null, $keyPrefix = '')
     {
         $entries = [];
 
@@ -33,7 +33,7 @@ trait Loggable
             $this->loadMissing($relations);
 
             foreach ($relations as $relation) {
-                $entries = array_merge($entries, $this->getRelatedLoggableArray($relation));
+                $entries = array_merge($entries, $this->getRelatedLogEntries($relation));
             }
         }
 
@@ -44,13 +44,13 @@ trait Loggable
      * @param string $relation
      * @return array
      */
-    private function getRelatedLoggableArray($relation)
+    private function getRelatedLogEntries($relation)
     {
         $relatedInstance = object_get($this, $relation);
         if ($relatedInstance) {
-            return $relatedInstance->toLoggableArray(null, $relation);
+            return $relatedInstance->toLogEntries(null, $relation);
         } else {
-            return $this->makeDummyLoggableArray($relation);
+            return $this->makeDummyLogEntries($relation);
         }
     }
 
@@ -58,7 +58,7 @@ trait Loggable
      * @param string $relation
      * @return array
      */
-    private function makeDummyLoggableArray($relation)
+    private function makeDummyLogEntries($relation)
     {
         $segments = explode('.', $relation);
 
