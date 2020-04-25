@@ -50,19 +50,15 @@ class LogClient
 
     /**
      * @param string $type
-     * @param array $entries
+     * @param string $version
+     * @param array $data
      * @return bool
      */
-    public function log($type, $entries)
+    public function log($type, $version, $data)
     {
         if (config('log.dry_run')) {
             return true;
         }
-
-        $keys = array_column($entries, 'key');
-        $data = array_column($entries, 'value');
-
-        $version = sha1(implode(',', $keys));
 
         return $this->request()
             ->asJson()
