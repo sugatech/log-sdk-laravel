@@ -22,11 +22,14 @@ trait Loggable
     {
         $entries = [];
 
-        foreach($this->loggable as $attribute) {
-            $entries[] = ['key' => $keyPrefix.':'.$attribute, 'value' => $this->getAttribute($attribute)];
+        foreach ($this->loggable as $attribute) {
+            $entries[] = [
+                'key' => $keyPrefix . ':' . $attribute,
+                'value' => $this->getAttribute($attribute)
+            ];
         }
 
-        if(!empty($relations)) {
+        if (!empty($relations)) {
             $this->loadMissing($relations);
 
             foreach ($relations as $relation) {
@@ -44,7 +47,7 @@ trait Loggable
     private function getRelatedLoggableArray($relation)
     {
         $relatedInstance = object_get($this, $relation);
-        if($relatedInstance) {
+        if ($relatedInstance) {
             return $relatedInstance->toLoggableArray(null, $relation);
         } else {
             return $this->makeDummyLoggableArray($relation);
@@ -66,7 +69,7 @@ trait Loggable
 
         return array_map(function ($attribute) use ($relation) {
             return [
-                'key' => $relation.':'.$attribute,
+                'key' => $relation . ':' . $attribute,
                 'value' => null,
             ];
         }, $relatedInstance->loggable);
