@@ -51,10 +51,10 @@ class LogClient
     /**
      * @param string $type
      * @param string $version
-     * @param array $data
+     * @param array|null $data
      * @return bool
      */
-    public function log($type, $version, $data)
+    public function log($type, $version, $data = null)
     {
         if (config('log.dry_run')) {
             return true;

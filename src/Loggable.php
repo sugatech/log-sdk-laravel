@@ -25,7 +25,7 @@ trait Loggable
         foreach ($this->loggable as $attribute) {
             $entries[] = [
                 'key' => $keyPrefix . ':' . $attribute,
-                'value' => $this->getAttribute($attribute)
+                'value' => $this->getAttribute($attribute),
             ];
         }
 
