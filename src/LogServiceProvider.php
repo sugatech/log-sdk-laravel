@@ -30,10 +30,19 @@ class LogServiceProvider extends ServiceProvider
         } elseif ($this->app instanceof LumenApplication) {
             $this->app->configure('log');
         }
+
+        if ($this->app->runningInConsole()) {
+            $this->registerMigrations();
+        }
     }
 
     protected function configPath()
     {
         return __DIR__ . '/../config/log.php';
+    }
+
+    protected function registerMigrations()
+    {
+        return $this->loadMigrationsFrom(__DIR__.'/../migrations');
     }
 }
