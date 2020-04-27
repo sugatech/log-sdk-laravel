@@ -2,10 +2,12 @@
 
 namespace Log\SDK;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class LogJob implements ShouldQueue
 {
@@ -38,8 +40,30 @@ class LogJob implements ShouldQueue
         $keys = array_column($this->entries, 'key');
         $data = array_column($this->entries, 'value');
 
-        $version = sha1(implode(',', $keys));
+        $hash = sha1($this->type . '_' . implode(',', $keys));
 
-        app('log.client')->log($this->type, $version, $data);
+        $version = DB::table('log_hashes')
+            ->where('hash', $hash)
+            ->value('version');
+
+        if (is_null($version)) {
+            $maxVersion = DB::table('log_hashes')
+                ->where('type', $this->type)
+                ->orderBy('id', 'desc')
+                ->value('version');
+
+            $version = ($maxVersion ?: 0) + 1;
+
+            DB::table('log_hashes')->insert([
+                'hash' => $hash,
+                'type' => $this->type,
+                'version' => $version,
+                'keys' => json_encode($keys),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
+        app('log.client')->log($this->type, (string) $version, $data);
     }
 }
