@@ -3,15 +3,17 @@
 namespace Log\SDK;
 
 use Illuminate\Support\Arr;
+use PassportClientCredentials\OAuthClient;
 use Zttp\PendingZttpRequest;
 use Zttp\Zttp;
+use Zttp\ZttpResponse;
 
 class LogClient
 {
     /**
-     * @var string
+     * @var OAuthClient
      */
-    private $accessToken;
+    private $oauthClient;
 
     /**
      * @var string
@@ -20,23 +22,35 @@ class LogClient
 
     /**
      * @param string $apiUrl
-     * @param string $accessToken
      */
-    public function __construct($apiUrl, $accessToken)
+    public function __construct($apiUrl)
     {
-        $this->accessToken = $accessToken;
+        $this->oauthClient = new OAuthClient(
+            config('log.oauth.url'),
+            config('log.oauth.client_id'),
+            config('log.oauth.client_secret')
+        );
         $this->apiUrl = $apiUrl;
     }
 
     /**
-     * @return PendingZttpRequest
+     * @param callable $handler
+     * @return ZttpResponse
      */
-    private function request()
+    private function request($handler)
     {
-        return Zttp::withHeaders([
-            'Authorization' => 'Bearer ' . $this->accessToken,
+        $request = Zttp::withHeaders([
+            'Authorization' => 'Bearer ' . $this->oauthClient->getAccessToken(),
         ])
             ->withoutVerifying();
+
+        $response = $handler($request);
+
+        if ($response->status() == 401) {
+            $this->oauthClient->getAccessToken(true);
+        }
+
+        return $response;
     }
 
     /**
@@ -60,16 +74,16 @@ class LogClient
             return true;
         }
 
-        return $this->request()
-            ->asJson()
-            ->post(
-                $this->getUrl('/logs'),
-                [
-                    'type' => $type,
-                    'version' => $version,
-                    'data' => is_array($data) ? Arr::flatten($data) : null,
-                ]
-            )
+        $params = [
+            'type' => $type,
+            'version' => $version,
+            'data' => is_array($data) ? Arr::flatten($data) : null,
+        ];
+
+        return $this->request(function (PendingZttpRequest $request) use ($params) {
+            return $request->asJson()
+                ->post($this->getUrl('/logs'), $params);
+        })
             ->isSuccess();
     }
 }
