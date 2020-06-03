@@ -10,6 +10,8 @@ class LogServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->mergeConfigFrom($this->configPath(), 'log');
+
         $this->app->singleton('log.client', function ($app) {
             $options = $app['config']->get('log');
 
