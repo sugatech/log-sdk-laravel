@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84577f269ca215ff375ccee8734457da",
+    "content-hash": "8a422a2c2b73f408c8cb0974f2fd8342",
     "packages": [
         {
             "name": "brick/math",
@@ -1332,16 +1332,16 @@
         },
         {
             "name": "sugatech/oauth2-client-credentials-laravel",
-            "version": "20.0.1",
+            "version": "20.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sugatech/oauth2-client-credentials-laravel.git",
-                "reference": "1abbd3ff1933b2f9fd0664fef070a97268c34357"
+                "reference": "d349284e704841736fe9e8f00d08981cf4e7147e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sugatech/oauth2-client-credentials-laravel/zipball/1abbd3ff1933b2f9fd0664fef070a97268c34357",
-                "reference": "1abbd3ff1933b2f9fd0664fef070a97268c34357",
+                "url": "https://api.github.com/repos/sugatech/oauth2-client-credentials-laravel/zipball/d349284e704841736fe9e8f00d08981cf4e7147e",
+                "reference": "d349284e704841736fe9e8f00d08981cf4e7147e",
                 "shasum": ""
             },
             "require": {
@@ -1356,7 +1356,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "PassportClientCredentials\\": "src/"
+                    "OAuth2ClientCredentials\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1364,7 +1364,7 @@
                 "MIT"
             ],
             "description": "Oauth2 client credentials for laravel and lumen",
-            "time": "2020-05-02T04:32:17+00:00"
+            "time": "2020-05-26T04:19:56+00:00"
         },
         {
             "name": "symfony/console",
