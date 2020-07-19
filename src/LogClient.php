@@ -3,7 +3,7 @@
 namespace Log\SDK;
 
 use Illuminate\Support\Arr;
-use PassportClientCredentials\OAuthClient;
+use OAuth2ClientCredentials\OAuthClient;
 use Zttp\PendingZttpRequest;
 use Zttp\Zttp;
 use Zttp\ZttpResponse;
