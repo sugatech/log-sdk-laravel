@@ -1615,19 +1615,20 @@
         },
         {
             "name": "sugatech/oauth2-client-credentials-laravel",
-            "version": "20.1.0",
+            "version": "20.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sugatech/oauth2-client-credentials-laravel.git",
-                "reference": "bb2b88ebd91b6500475a874f58b7d87086baf6c2"
+                "reference": "69957044793da23477aed314696752e296be8c7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sugatech/oauth2-client-credentials-laravel/zipball/bb2b88ebd91b6500475a874f58b7d87086baf6c2",
-                "reference": "bb2b88ebd91b6500475a874f58b7d87086baf6c2",
+                "url": "https://api.github.com/repos/sugatech/oauth2-client-credentials-laravel/zipball/69957044793da23477aed314696752e296be8c7a",
+                "reference": "69957044793da23477aed314696752e296be8c7a",
                 "shasum": ""
             },
             "require": {
+                "guzzlehttp/guzzle": "^6.0|^7.0",
                 "illuminate/config": "~5.3|^6.0|^7.0",
                 "illuminate/http": "^6.0|^7.0",
                 "illuminate/support": "~5.3|^6.0|^7.0",
@@ -1647,7 +1648,7 @@
                 "MIT"
             ],
             "description": "Oauth2 client credentials for laravel and lumen",
-            "time": "2020-09-14T07:26:33+00:00"
+            "time": "2020-09-14T10:04:31+00:00"
         },
         {
             "name": "symfony/console",
