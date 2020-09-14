@@ -2,11 +2,11 @@
 
 namespace Log\SDK;
 
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 use OAuth2ClientCredentials\OAuthClient;
-use Zttp\PendingZttpRequest;
-use Zttp\Zttp;
-use Zttp\ZttpResponse;
 
 class LogClient
 {
@@ -35,11 +35,11 @@ class LogClient
 
     /**
      * @param callable $handler
-     * @return ZttpResponse
+     * @return Response
      */
     private function request($handler)
     {
-        $request = Zttp::withHeaders([
+        $request = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->oauthClient->getAccessToken(),
         ])
             ->withoutVerifying();
@@ -80,10 +80,10 @@ class LogClient
             'data' => is_array($data) ? Arr::flatten($data) : null,
         ];
 
-        return $this->request(function (PendingZttpRequest $request) use ($params) {
+        return $this->request(function (PendingRequest $request) use ($params) {
             return $request->asJson()
                 ->post($this->getUrl('/logs'), $params);
         })
-            ->isSuccess();
+            ->successful();
     }
 }
