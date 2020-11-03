@@ -36,6 +36,7 @@ class LogClient
     /**
      * @param callable $handler
      * @return Response
+     * @throws \Illuminate\Http\Client\RequestException
      */
     private function request($handler)
     {
@@ -67,6 +68,7 @@ class LogClient
      * @param string $version
      * @param array|null $data
      * @return bool
+     * @throws \Illuminate\Http\Client\RequestException
      */
     public function log($type, $version, $data = null)
     {
