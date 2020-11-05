@@ -1,6 +1,6 @@
 {
     "name": "sugatech/log-sdk-laravel",
-    "version": "20.6.0",
+    "version": "20.6.1",
     "type": "library",
     "description": "Log Service SDK for Laravel and Lumen",
     "license": "MIT",
@@ -12,7 +12,7 @@
         "illuminate/config": "^7.0|^8.0",
         "illuminate/bus": "^7.0|^8.0",
         "illuminate/queue": "^7.0|^8.0",
-        "illuminate/http": "^6.0|^7.0",
+        "illuminate/http": "^7.0|^8.0",
         "guzzlehttp/guzzle": "^6.0|^7.0",
         "sugatech/oauth2-client-credentials-laravel": "^20.2"
     },
