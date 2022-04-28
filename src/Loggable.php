@@ -23,9 +23,14 @@ trait Loggable
         $entries = [];
 
         foreach ($this->loggable as $attribute) {
+            $value = $this->getAttribute($attribute);
+            if(is_array($value) || is_object($value)) {
+                $value = json_encode($value);
+            }
+
             $entries[] = [
                 'key' => $keyPrefix . ':' . $attribute,
-                'value' => $this->getAttribute($attribute),
+                'value' => $value,
             ];
         }
 
